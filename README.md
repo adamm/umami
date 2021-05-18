@@ -49,14 +49,24 @@ DATABASE_URL=(connection url)
 HASH_SALT=(any random string)
 ```
 
+The `HASH_SALT` is used to generate unique values for your installation.
+
 The connection url is in the following format:
+
 ```
 postgresql://username:mypassword@localhost:5432/mydb
 
+postgresql://username:mypassword@localhost:5432/mydb?socket=/var/run/postgresql/
+
 mysql://username:mypassword@localhost:3306/mydb
+
+mysql://username:mypassword@localhost:3306/mydb?socket=/var/run/mysql/
 ```
 
-The `HASH_SALT` is used to generate unique values for your installation.
+Note when using the socket method, a hostname is still required but the value is ignored.
+See Prisma docs for [Postgresql](https://www.prisma.io/docs/concepts/database-connectors/postgresql#connection-details)
+and [MySQL](https://www.prisma.io/docs/concepts/database-connectors/mysql#connection-details) for all available database
+configuration options.
 
 ### Build the application
 
