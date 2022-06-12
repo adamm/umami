@@ -9,9 +9,10 @@ RUN yarn install --frozen-lockfile
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
 ARG BASE_PATH
+ARG DATABASE_URL
 ARG DATABASE_TYPE
 ENV BASE_PATH=$BASE_PATH
-ENV DATABASE_URL "postgresql://umami:umami@db:5432/umami"
+ENV DATABASE_URL=$DATABASE_URL
 ENV DATABASE_TYPE=$DATABASE_TYPE
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
