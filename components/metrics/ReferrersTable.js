@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import MetricsTable from './MetricsTable';
 import FilterButtons from 'components/common/FilterButtons';
+import FilterLink from 'components/common/FilterLink';
 import { refFilter } from 'lib/filters';
 
 export const FILTER_DOMAIN_ONLY = 0;
@@ -23,14 +24,8 @@ export default function ReferrersTable({ websiteId, websiteDomain, showFilters, 
     { label: <FormattedMessage id="metrics.filter.raw" defaultMessage="Raw" />, value: FILTER_RAW },
   ];
 
-  const renderLink = ({ w: href, x: url }) => {
-    return (href || url).startsWith('http') ? (
-      <a href={href || url} target="_blank" rel="noreferrer">
-        {decodeURI(url)}
-      </a>
-    ) : (
-      decodeURI(url)
-    );
+  const renderLink = ({ w: link, x: referrer }) => {
+    return <FilterLink id="referrer" value={referrer} externalUrl={link} />;
   };
 
   return (

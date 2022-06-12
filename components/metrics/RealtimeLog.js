@@ -7,7 +7,7 @@ import Tag from 'components/common/Tag';
 import Dot from 'components/common/Dot';
 import FilterButtons from 'components/common/FilterButtons';
 import NoData from 'components/common/NoData';
-import { devices } from 'components/messages';
+import { getDeviceMessage, labels } from 'components/messages';
 import useLocale from 'hooks/useLocale';
 import useCountryNames from 'hooks/useCountryNames';
 import { BROWSERS } from 'lib/constants';
@@ -31,7 +31,7 @@ const TYPE_ICONS = {
 
 export default function RealtimeLog({ data, websites, websiteId }) {
   const intl = useIntl();
-  const [locale] = useLocale();
+  const { locale } = useLocale();
   const countryNames = useCountryNames(locale);
   const [filter, setFilter] = useState(TYPE_ALL);
 
@@ -129,15 +129,10 @@ export default function RealtimeLog({ data, websites, websiteId }) {
           id="message.log.visitor"
           defaultMessage="Visitor from {country} using {browser} on {os} {device}"
           values={{
-            country: (
-              <b>
-                {countryNames[country] ||
-                  intl.formatMessage({ id: 'label.unknown', defaultMessage: 'Unknown' })}
-              </b>
-            ),
+            country: <b>{countryNames[country] || intl.formatMessage(labels.unknown)}</b>,
             browser: <b>{BROWSERS[browser]}</b>,
             os: <b>{os}</b>,
-            device: <b>{intl.formatMessage(devices[device])?.toLowerCase()}</b>,
+            device: <b>{intl.formatMessage(getDeviceMessage(device))}</b>,
           }}
         />
       );

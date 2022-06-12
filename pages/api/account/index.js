@@ -18,15 +18,12 @@ export default async (req, res) => {
         const data = {};
 
         if (password) {
-          data.password = await hashPassword(password);
+          data.password = hashPassword(password);
         }
 
         // Only admin can change these fields
         if (current_user_is_admin) {
-          // Cannot change username of admin
-          if (username !== 'admin') {
-            data.username = username;
-          }
+          data.username = username;
           data.is_admin = is_admin;
         }
 
@@ -51,7 +48,7 @@ export default async (req, res) => {
         return badRequest(res, 'Account already exists');
       }
 
-      const created = await createAccount({ username, password: await hashPassword(password) });
+      const created = await createAccount({ username, password: hashPassword(password) });
 
       return ok(res, created);
     }

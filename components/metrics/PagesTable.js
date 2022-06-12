@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import classNames from 'classnames';
-import Link from 'next/link';
+import FilterLink from 'components/common/FilterLink';
 import FilterButtons from 'components/common/FilterButtons';
 import { urlFilter } from 'lib/filters';
-import usePageQuery from 'hooks/usePageQuery';
 import MetricsTable from './MetricsTable';
-import styles from './PagesTable.module.css';
 
 export const FILTER_COMBINED = 0;
 export const FILTER_RAW = 1;
 
 export default function PagesTable({ websiteId, websiteDomain, showFilters, ...props }) {
   const [filter, setFilter] = useState(FILTER_COMBINED);
-  const {
-    resolve,
-    query: { url },
-  } = usePageQuery();
 
   const buttons = [
     {
@@ -26,19 +19,8 @@ export default function PagesTable({ websiteId, websiteDomain, showFilters, ...p
     { label: <FormattedMessage id="metrics.filter.raw" defaultMessage="Raw" />, value: FILTER_RAW },
   ];
 
-  const renderLink = ({ x }) => {
-    return (
-      <Link href={resolve({ url: x })} replace={true}>
-        <a
-          className={classNames({
-            [styles.inactive]: url && x !== url,
-            [styles.active]: x === url,
-          })}
-        >
-          {decodeURI(x)}
-        </a>
-      </Link>
-    );
+  const renderLink = ({ x: url }) => {
+    return <FilterLink id="url" value={url} />;
   };
 
   return (
